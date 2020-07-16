@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfAppWeatherParser", "WpfA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClassLibraryWeather", "ClassLibraryWeatherParser\ClassLibraryWeather.csproj", "{F29365B6-06D7-4A62-AE34-E11C74F6C522}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{020C8A9B-FC5E-4A14-A703-F3BDF16115AA}"
+	ProjectSection(SolutionItems) = preProject
+		DataBase.sql = DataBase.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
