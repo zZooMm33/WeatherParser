@@ -58,7 +58,7 @@ namespace WebApplicationWeatherParser.Controllers
                 }                
             }
 
-            if (cityUrl != "")
+            if (cityUrl != "https:")
             {                
                 HtmlNode htmlPage = null;
 
