@@ -20,9 +20,8 @@ namespace WebApplicationWeatherParser.Controllers
     [ApiController]
     public class WeatherParserController : ControllerBase
     {
-        const string _urlWeather = "https://world-weather.ru/archive/russia/";
-
         WeatherContext _weatherContext;
+        const string _urlWeather = "https://world-weather.ru/archive/russia/";
 
         public WeatherParserController(WeatherContext weatherContext)
         {
