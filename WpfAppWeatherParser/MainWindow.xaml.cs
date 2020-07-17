@@ -42,24 +42,30 @@ namespace WpfAppWeatherParser
                 {
                     string formatted = selectedDate.Value.ToString("dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
-                    var request = (HttpWebRequest)WebRequest.Create(textBoxApiUrl.Text + "api/GetWeather?name=" + textBoxCity.Text + "&date=" + formatted);
-                    var response = (HttpWebResponse)request.GetResponse();
-                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
-
-                    Weather weather = JsonConvert.DeserializeObject<Weather>(responseString);
-
-                    if (weather != null)
+                    try
                     {
-                        textBoxWeather.Text = weather.State
-                            + "\nТемпература: " + weather.Temperature + "°"
-                            + "\nСкорость ветра: " + weather.WindSpeed + "м/с"
-                            + "\nВлажность воздуха: " + weather.AirHumidity + "%";
+                        var request = (HttpWebRequest)WebRequest.Create(textBoxApiUrl.Text + "api/GetWeather?name=" + textBoxCity.Text + "&date=" + formatted);
+                        var response = (HttpWebResponse)request.GetResponse();
+                        var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-                        if ((selectedDate.Value - DateTime.Now.Date).TotalDays >= 0) 
-                            textBoxWeather.Text += "\nВероятность осадков: " + weather.ChancePrecipitation + "%";
+                        Weather weather = JsonConvert.DeserializeObject<Weather>(responseString);
+
+                        if (weather != null)
+                        {
+                            textBoxWeather.Text = weather.State
+                                + "\nТемпература: " + weather.Temperature + "°"
+                                + "\nСкорость ветра: " + weather.WindSpeed + "м/с"
+                                + "\nВлажность воздуха: " + weather.AirHumidity + "%";
+
+                            if ((selectedDate.Value - DateTime.Now.Date).TotalDays >= 0)
+                                textBoxWeather.Text += "\nВероятность осадков: " + weather.ChancePrecipitation + "%";
+                        }
+                        else MessageBox.Show("Данные о погоде отсутствуют в базе данных.");
                     }
-                    else MessageBox.Show("Данные о погоде отсутствуют в базе данных.");
-
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Ошибка в url.");
+                    }
                 }
                 else MessageBox.Show("Ошибка, дата не корректна.");
             }
@@ -75,12 +81,19 @@ namespace WpfAppWeatherParser
                 {
                     string formatted = selectedDate.Value.ToString("dd.MM.yyyy", System.Globalization.CultureInfo.InvariantCulture);
 
-                    var request = (HttpWebRequest)WebRequest.Create(textBoxApiUrl.Text + "api/WeatherParser?name=" + textBoxCity.Text + "&date=" + formatted);
-                    var response = (HttpWebResponse)request.GetResponse();
-                    var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
+                    try
+                    {
+                        var request = (HttpWebRequest)WebRequest.Create(textBoxApiUrl.Text + "api/WeatherParser?name=" + textBoxCity.Text + "&date=" + formatted);
+                        var response = (HttpWebResponse)request.GetResponse();
+                        var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-                    if (Convert.ToInt32(responseString) == 1) MessageBox.Show("Данные были успешно обновлены.");
-                    else MessageBox.Show("При обновлении данных возникла ошибка.");
+                        if (Convert.ToInt32(responseString) == 1) MessageBox.Show("Данные были успешно обновлены.");
+                        else MessageBox.Show("При обновлении данных возникла ошибка.");
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Ошибка в url.");
+                    }
                 }
                 else MessageBox.Show("Ошибка, дата не корректна.");
             }
